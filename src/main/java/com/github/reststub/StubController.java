@@ -35,7 +35,7 @@ public class StubController {
         return "201";
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
     public User update(@PathVariable("id") String id, @RequestBody User item) {
         Integer index = Integer.parseInt(id) - 1;
         User user = users.get(index);
@@ -44,7 +44,7 @@ public class StubController {
         return user;
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}")
     public List<User> delete(@PathVariable("id") String id) {
         int index = Integer.parseInt(id) - 1;
         users.remove(index);
