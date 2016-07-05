@@ -10,7 +10,7 @@ public class StubController {
 
     private List<User> users;
 
-    public StubController(){
+    public StubController() {
         users = new ArrayList<>();
         User user = new User();
         user.setId(1);
@@ -25,7 +25,7 @@ public class StubController {
     }
 
     @RequestMapping("/users")
-    public User findUserByName(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public User findUserByName(@RequestParam(value = "id", defaultValue = "1") String name) {
         return users.get(0);
     }
 
@@ -33,5 +33,14 @@ public class StubController {
     public String create(@RequestBody User user) {
         users.add(user);
         return "201";
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
+    public User update(@PathVariable("id") String id, @RequestBody User item) {
+        Integer index = Integer.parseInt(id) - 1;
+        User user = users.get(index);
+        user.setAge(item.getAge());
+        user.setName(item.getName());
+        return user;
     }
 }
