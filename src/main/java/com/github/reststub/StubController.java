@@ -43,4 +43,11 @@ public class StubController {
         user.setName(item.getName());
         return user;
     }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
+    public List<User> delete(@PathVariable("id") String id) {
+        int index = Integer.parseInt(id) - 1;
+        users.remove(index);
+        return users;
+    }
 }
