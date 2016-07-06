@@ -1,5 +1,7 @@
 package com.github.reststub;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,29 +27,30 @@ public class StubController {
     }
 
     @RequestMapping("/users")
-    public User findUserByName(@RequestParam(value = "id", defaultValue = "1") String name) {
-        return users.get(0);
+    public ResponseEntity<User> findUserByName(@RequestParam(value = "id", defaultValue = "1") String name) {
+        User user = users.get(0);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/users")
-    public String create(@RequestBody User user) {
+    public ResponseEntity create(@RequestBody User user) {
         users.add(user);
-        return "201";
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
-    public User update(@PathVariable("id") String id, @RequestBody User item) {
+    public ResponseEntity<User> update(@PathVariable("id") String id, @RequestBody User item) {
         Integer index = Integer.parseInt(id) - 1;
         User user = users.get(index);
         user.setAge(item.getAge());
         user.setName(item.getName());
-        return user;
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/users/{id}")
-    public List<User> delete(@PathVariable("id") String id) {
+    public ResponseEntity delete(@PathVariable("id") String id) {
         int index = Integer.parseInt(id) - 1;
         users.remove(index);
-        return users;
+        return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 }
