@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,5 +53,12 @@ public class StubController {
         int index = Integer.parseInt(id) - 1;
         users.remove(index);
         return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping("/stub/**")
+    public ResponseEntity handle(HttpServletRequest request) {
+        System.out.println(request.getRequestURI());
+        System.out.println(request.getQueryString());
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
